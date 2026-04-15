@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shadi Mubarak | Arshiya & Saajid</title>
+    
+    <!-- Google Fonts for English, Arabic, Hindi and Urdu Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cinzel:wght@400;600;700&family=Great+Vibes&family=Montserrat:wght@300;400;500&family=Noto+Nastaliq+Urdu:wght@400;700&family=Tiro+Devanagari+Hindi&display=swap" rel="stylesheet">
+
+    <style>
+        /* =========================================
+           VARIABLES & RESET
+           ========================================= */
+        :root {
+            --bg-color: #FDFBF7;
+            --text-main: #2C1E16;
+            --maroon: #721c24;
+            --maroon-dark: #4a0f15;
+            --gold: #D4AF37;
+            --gold-light: #F3E5AB;
+            
+            --font-body: 'Montserrat', sans-serif;
+            --font-heading: 'Cinzel', serif;
+            --font-script: 'Great Vibes', cursive;
+            --font-urdu: 'Noto Nastaliq Urdu', 'Amiri', serif;
+            --font-hindi: 'Tiro Devanagari Hindi', serif;
+            --font-arabic: 'Amiri', serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: var(--font-body);
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* =========================================
+           ENTRY SCREEN
+           ========================================= */
+        #entry-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: radial-gradient(circle, var(--maroon) 0%, var(--maroon-dark) 100%);
+            z-index: 10000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: var(--gold);
+            transition: opacity 1.2s ease-in-out, visibility 1.2s;
+            cursor: pointer;
+        }
+
+        #entry-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .seal {
+            width: 130px;
+            height: 130px;
+            border: 2px solid var(--gold);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: var(--font-script);
+            font-size: 2.8rem;
+            animation: pulseSeal 2.5s infinite alternate;
+            margin-bottom: 2rem;
+            background: rgba(212, 175, 55, 0.05);
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.2);
+        }
+
+        @keyframes pulseSeal {
+            0% { transform: scale(1); box-shadow: 0 0 10px rgba(212, 175, 55, 0.2); }
+            100% { transform: scale(1.08); box-shadow: 0 0 40px rgba(212, 175, 55, 0.5); }
+        }
+
+        .tap-text {
+            font-family: var(--font-heading);
+            letter-spacing: 4px;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            animation: fadeInOut 2s infinite;
+        }
+
+        @keyframes fadeInOut {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        /* =========================================
+           FORCE-FIXED MUSIC BUTTON - MAX PRIORITY
+           ========================================= */
+        #music-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: var(--gold);
+            border: 2px solid white;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 2147483647 !important; 
+            display: none; 
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 25px rgba(0,0,0,0.4);
+            transition: transform 0.3s ease;
+            opacity: 1 !important;
+            visibility: visible !important;
+        }
+
+        #music-btn.visible {
+            display: flex !important;
+            animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        #music-btn svg {
+            width: 28px;
+            height: 28px;
+            fill: #fff;
+            pointer-events: none;
+        }
+
+        .spin {
+            animation: spinDisc 5s linear infinite;
+        }
+
+        @keyframes spinDisc {
+            100% { transform: rotate(360deg); }
+        }
+
+        /* =========================================
+           MULTILINGUAL TYPOGRAPHY
+           ========================================= */
+        .urdu {
+            font-family: var(--font-urdu);
+            color: var(--gold);
+            font-size: 1.2rem;
+            line-height: 2.2;
+            margin-bottom: 5px;
+        }
+        .hindi {
+            font-family: var(--font-hindi);
+            color: var(--maroon);
+            font-size: 1rem;
+            opacity: 0.85;
+            margin-bottom: 1.5rem;
+        }
+
+        /* =========================================
+           LAYOUT & DECOR
+           ========================================= */
+        main {
+            position: relative;
+            z-index: 1;
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 2rem;
+            background: rgba(253, 251, 247, 0.95);
+        }
+
+        section {
+            min-height: 95vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 5rem 1rem;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 1.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        section.in-view {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .names-container { margin: 2.5rem 0; }
+
+        .name-eng {
+            font-family: var(--font-script);
+            font-size: 4.5rem;
+            color: var(--maroon);
+            line-height: 1.1;
+        }
+
+        .event-box {
+            border: 1.5px solid var(--gold);
+            padding: 3rem 2rem;
+            background: #fff;
+            width: 100%;
+            max-width: 550px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+            margin-top: 2rem;
+        }
+
+        .divider {
+            width: 200px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            margin: 2.5rem auto;
+        }
+
+        #particles {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 0;
+        }
+        .particle {
+            position: absolute;
+            background: var(--gold);
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: floatUp linear infinite;
+        }
+        @keyframes floatUp {
+            0% { transform: translateY(110vh) rotate(0deg); opacity: 0; }
+            20% { opacity: 0.5; }
+            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+        }
+
+        @media (max-width: 768px) {
+            .name-eng { font-size: 3.2rem; }
+            section { padding: 4rem 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Audio Element using local file path -->
+    <audio id="bg-music" loop preload="auto">
+        <source src="song.mp3" type="audio/mpeg">
+    </audio>
+
+    <div id="entry-screen">
+        <div class="seal">A & S</div>
+        <div class="tap-text">Bismillah... Open Invitation</div>
+    </div>
+
+    <button id="music-btn" aria-label="Toggle Music">
+        <svg id="icon-play" viewBox="0 0 24 24" style="display: none;"><path d="M8 5v14l11-7z"/></svg>
+        <svg id="icon-pause" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+    </button>
+
+    <div id="particles"></div>
+
+    <main>
+        <section id="hero">
+            <div class="arabic-bismillah" style="font-family: var(--font-arabic); font-size: 2.5rem; color: var(--maroon);">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيم</div>
+            
+            <div class="names-container">
+                <p class="sub-heading" style="font-family: var(--font-heading); color: var(--gold); letter-spacing: 5px; margin-bottom: 1rem;">WE ARE GETTING MARRIED</p>
+                <div class="name-eng">Arshiya Parveen</div>
+                <div class="urdu">عرشیہ پروین</div>
+                <div class="hindi">अर्श़िया परवीन</div>
+                
+                <div style="font-family: var(--font-heading); font-size: 2rem; color: var(--gold); margin: 0.5rem 0;">&</div>
+                
+                <div class="name-eng">Muhammad Saajid</div>
+                <div class="urdu">محمد ساجد انصاری</div>
+                <div class="hindi">मोहम्मद साजिद अंसारी</div>
+            </div>
+
+            <div class="divider"></div>
+            <p class="sub-heading" style="color: var(--maroon); font-weight: 600; letter-spacing: 2px;">SHADI MUBARAK / NIKAH</p>
+            <p class="urdu">شادی مبارک / نکاح</p>
+            <p class="hindi">शादी मुबारक / निकाह</p>
+        </section>
+
+        <section id="invitation">
+            <h2 class="guest-greeting" id="guest-greeting" style="font-family: var(--font-heading); color: var(--maroon); font-size: 1.8rem;">Dear Guest,</h2>
+            <div class="divider" style="width: 50px;"></div>
+            
+            <p class="invitation-text" style="font-size: 1.1rem; line-height: 1.8; max-width: 650px; margin-bottom: 1rem;">
+                You are warmly invited to join us on this blessed occasion of our Nikah. Your presence will be the greatest gift as we begin our life together.
+            </p>
+            
+            <p class="urdu">آپ کو ہمارے نکاح کی اس مبارک تقریب میں شرکت کی دلی دعوت دی جاتی ہے۔ آپ کی آمد ہمارے لیے خوشی کا باعث ہوگی۔</p>
+            <p class="hindi">आपको हमारे निकाह के इस पावन अवसर पर शामिल होने के लिए सादर आमंत्रित किया जाता है। आपकी उपस्थिति हमारे लिए गौरव की बात होगी।</p>
+        </section>
+
+        <section id="details">
+            <div class="event-box">
+                <h3 style="font-family: var(--font-heading); color: var(--maroon); font-size: 2rem;">When & Where</h3>
+                <div class="divider" style="width: 80px; margin: 1.5rem auto;"></div>
+                
+                <p style="font-size: 1.3rem; margin-bottom: 5px;"><strong>Tuesday, 26 April 2026</strong></p>
+                <p class="urdu">منگل، ۲۶ اپریل ۲۰۲۶ / ۸ شوال ۱۴۴۷</p>
+                <p class="hindi">मंगलवार, 26 अप्रैल 2026</p>
+                
+                <p style="margin-top: 1.5rem; font-size: 1.1rem;"><strong>Time: 10:30 AM</strong></p>
+                <p class="urdu">وقت: صبح ۱۰:۳۰ بجے</p>
+                
+                <div class="divider" style="width: 40px; margin: 1.5rem auto;"></div>
+                
+                <p style="font-size: 1.2rem; color: var(--maroon);"><strong>Venue: Tuba Palace</strong></p>
+                <p style="font-size: 1rem;">Manora Road, Mangrulpir, District Washim</p>
+                <p class="urdu">ٹوبہ پیلس، منورہ روڈ، منگرول پیر، ضلع واشم</p>
+                <p class="hindi">टूबा पैलेस, मनोरा रोड, मंगरुलपीर, जिला वाशिम</p>
+            </div>
+
+            <div style="margin-top: 3rem;">
+                <p style="font-weight: 600;">Walima / Dinner after Nikah</p>
+                <p class="urdu">نکاح کے بعد ولیمہ / عشائیہ</p>
+                <p class="hindi">निकाह के बाद वलीमा / रात्रिभोज</p>
+            </div>
+        </section>
+
+        <section id="closing">
+            <p class="sub-heading" style="font-size: 0.9rem; margin-bottom: 1rem; color: var(--gold); letter-spacing: 2px;">WITH BEST COMPLIMENTS</p>
+            <div style="font-family: var(--font-heading); color: var(--maroon); font-size: 1.2rem; line-height: 2;">
+                Muhammad Qasim Ansari<br>
+                Muhammad Haroon Ansari<br>
+                Muhammad Shakir Ansari
+            </div>
+
+            <div class="divider"></div>
+            <div style="font-family: var(--font-arabic); font-size: 1.8rem; color: var(--gold); margin-bottom: 1rem;">
+                بَارَكَ اللَّهُ لَكَ وَبَارَكَ عَلَيْكَ وَجَمَعَ بَيْنَكُمَا فِي خَيْرٍ
+            </div>
+            <p class="invitation-text" style="font-style: italic;">"May Allah bless you and join you both in goodness."</p>
+        </section>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            /* 1. URL Personalization */
+            const urlParams = new URLSearchParams(window.location.search);
+            const guestName = urlParams.get('Guest');
+            const greeting = document.getElementById('guest-greeting');
+            if (guestName && greeting) {
+                greeting.innerHTML = `Dear <span style="font-family: var(--font-script); font-size: 2.2rem; color: var(--gold);">${guestName}</span>,`;
+            }
+
+            /* 2. Enhanced Audio Logic */
+            const entry = document.getElementById('entry-screen');
+            const audio = document.getElementById('bg-music');
+            const btn = document.getElementById('music-btn');
+            const iconPlay = document.getElementById('icon-play');
+            const iconPause = document.getElementById('icon-pause');
+            
+            const startTimestamp = 38; // Target time: 38 seconds
+
+            // Function to handle the start of audio
+            const handleAudioStart = async () => {
+                try {
+                    btn.classList.add('visible');
+                    
+                    // Unmute and set volume
+                    audio.muted = false;
+                    audio.volume = 1.0;
+
+                    // IMPORTANT: Jump to timestamp first
+                    audio.currentTime = startTimestamp;
+                    
+                    // Start playback
+                    const playPromise = audio.play();
+                    
+                    if (playPromise !== undefined) {
+                        playPromise.then(() => {
+                            btn.classList.add('spin');
+                            iconPlay.style.display = 'none';
+                            iconPause.style.display = 'block';
+                        }).catch(error => {
+                            console.warn("Autoplay was prevented. User needs to toggle manually.", error);
+                        });
+                    }
+                } catch (err) {
+                    console.error("Audio trigger error:", err);
+                }
+            };
+
+            // Entry Screen Trigger
+            entry.addEventListener('click', () => {
+                entry.classList.add('hidden');
+                
+                // If metadata is already loaded, jump and play. 
+                // Otherwise, wait for metadata or just play (most modern browsers allow jump on play)
+                if (audio.readyState >= 1) {
+                    handleAudioStart();
+                } else {
+                    audio.addEventListener('loadedmetadata', handleAudioStart, { once: true });
+                }
+            });
+
+            // Play/Pause Button Logic
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                if (audio.paused) {
+                    audio.play();
+                    iconPlay.style.display = 'none';
+                    iconPause.style.display = 'block';
+                    btn.classList.add('spin');
+                } else {
+                    audio.pause();
+                    iconPause.style.display = 'none';
+                    iconPlay.style.display = 'block';
+                    btn.classList.remove('spin');
+                }
+            });
+
+            /* 3. Scroll Animations */
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(e => {
+                    if (e.isIntersecting) e.target.classList.add('in-view');
+                });
+            }, { threshold: 0.1 });
+            document.querySelectorAll('section').forEach(s => observer.observe(s));
+
+            /* 4. Background Particles */
+            const pContainer = document.getElementById('particles');
+            for(let i=0; i<30; i++) {
+                const p = document.createElement('div');
+                p.className = 'particle';
+                const size = Math.random() * 5 + 2;
+                p.style.width = p.style.height = `${size}px`;
+                p.style.left = `${Math.random() * 100}vw`;
+                p.style.animationDuration = `${Math.random() * 8 + 8}s`;
+                p.style.animationDelay = `${Math.random() * 5}s`;
+                pContainer.appendChild(p);
+            }
+        });
+    </script>
+</body>
+</html>
